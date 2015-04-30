@@ -1,0 +1,39 @@
+//
+//  FlickrPhoto.swift
+//  Assignment3
+//
+//  Created by admin on 28/04/15.
+//  Copyright (c) 2015 Chip Digital GmbH. All rights reserved.
+//
+
+import UIKit
+
+class FlickrPhoto
+{
+    var farm:   Int     = 0
+    var id:     String  = ""
+    var server: String  = ""
+    var secret: String  = ""
+    
+    init(flickrAPIResponsePhoto: NSDictionary)
+    {
+        farm    = flickrAPIResponsePhoto["farm"]    as! Int
+        id      = flickrAPIResponsePhoto["id"]      as! String
+        server  = flickrAPIResponsePhoto["server"]  as! String
+        secret  = flickrAPIResponsePhoto["secret"]  as! String
+    }
+    
+    func loadImage() -> UIImage
+    {
+        let url = NSURL(string: photoUrl)
+        let data = NSData(contentsOfURL: url!)
+        return UIImage(data: data!)!
+    }
+    
+    var photoUrl: String
+    {
+        get {
+            return "https://farm\(farm).staticflickr.com/\(server)/\(id)_\(secret)_t.jpg";
+        }
+    }
+}
