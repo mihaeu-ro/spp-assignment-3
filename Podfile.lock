@@ -1,13 +1,13 @@
 PODS:
   - Alamofire (1.2.1)
-  - ZLBalancedFlowLayout (0.0.2)
+  - XCGLogger (2.0)
 
 DEPENDENCIES:
   - Alamofire
-  - ZLBalancedFlowLayout
+  - XCGLogger
 
 SPEC CHECKSUMS:
   Alamofire: 1acfdf179aff68b41a48dff70c1ac7fa263e2bcb
-  ZLBalancedFlowLayout: 067157ef9efeec30ff145ee91d3ff806d73cc489
+  XCGLogger: 90570901ddf86d5479672d61a1b0a639235b851a
 
 COCOAPODS: 0.36.4

@@ -49,9 +49,9 @@ code_sign() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'Alamofire.framework'
-  install_framework 'ZLBalancedFlowLayout.framework'
+  install_framework 'XCGLogger.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'Alamofire.framework'
-  install_framework 'ZLBalancedFlowLayout.framework'
+  install_framework 'XCGLogger.framework'
 fi

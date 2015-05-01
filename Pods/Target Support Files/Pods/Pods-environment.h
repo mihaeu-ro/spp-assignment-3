@@ -12,9 +12,9 @@
 #define COCOAPODS_VERSION_MINOR_Alamofire 2
 #define COCOAPODS_VERSION_PATCH_Alamofire 1
 
-// ZLBalancedFlowLayout
-#define COCOAPODS_POD_AVAILABLE_ZLBalancedFlowLayout
-#define COCOAPODS_VERSION_MAJOR_ZLBalancedFlowLayout 0
-#define COCOAPODS_VERSION_MINOR_ZLBalancedFlowLayout 0
-#define COCOAPODS_VERSION_PATCH_ZLBalancedFlowLayout 2
+// XCGLogger
+#define COCOAPODS_POD_AVAILABLE_XCGLogger
+#define COCOAPODS_VERSION_MAJOR_XCGLogger 2
+#define COCOAPODS_VERSION_MINOR_XCGLogger 0
+#define COCOAPODS_VERSION_PATCH_XCGLogger 0
 

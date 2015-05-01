@@ -5,7 +5,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Flickr Photo View Controller-->
+        <!--Flickr Search-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="FlickrPhotoViewController" customModule="Assignment3" customModuleProvider="target" sceneMemberID="viewController">
@@ -20,7 +20,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kGy-cX-wjK">
                                 <rect key="frame" x="16" y="116" width="568" height="476"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="QFd-Cm-0mH">
-                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="itemSize" width="100" height="100"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -30,20 +30,20 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rwV-7C-WWq">
-                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                 </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="rwV-7C-WWq" firstAttribute="leading" secondItem="oys-8q-j2h" secondAttribute="leading" id="05f-Ek-8l4"/>
-                                            <constraint firstAttribute="bottom" secondItem="rwV-7C-WWq" secondAttribute="bottom" id="4qk-2O-nfU"/>
-                                            <constraint firstAttribute="trailing" secondItem="rwV-7C-WWq" secondAttribute="trailing" id="JSo-ET-uWF"/>
-                                            <constraint firstItem="rwV-7C-WWq" firstAttribute="top" secondItem="oys-8q-j2h" secondAttribute="top" id="zc2-qa-mel"/>
+                                            <constraint firstAttribute="bottom" secondItem="rwV-7C-WWq" secondAttribute="bottom" id="Ec5-fn-OIM"/>
+                                            <constraint firstItem="rwV-7C-WWq" firstAttribute="top" secondItem="oys-8q-j2h" secondAttribute="top" id="Eo5-ic-Dyj"/>
+                                            <constraint firstAttribute="trailing" secondItem="rwV-7C-WWq" secondAttribute="trailing" id="J9Z-3j-3LU"/>
+                                            <constraint firstItem="rwV-7C-WWq" firstAttribute="leading" secondItem="oys-8q-j2h" secondAttribute="leading" id="QdO-a6-gqA"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="imageView" destination="rwV-7C-WWq" id="e7Q-tZ-YdJ"/>
@@ -51,7 +51,7 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="5ld-da-Pn3">
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="5ld-da-Pn3">
                                 <rect key="frame" x="16" y="72" width="568" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
@@ -67,13 +67,7 @@
                             <constraint firstItem="kGy-cX-wjK" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="yof-XM-Xgp"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="EHr-nK-7B8">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="JqC-ES-CdE">
-                            <connections>
-                                <action selector="clear:" destination="BYZ-38-t0r" id="cEU-uI-UhP"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Flickr Search" id="EHr-nK-7B8"/>
                     <connections>
                         <outlet property="collectionView" destination="kGy-cX-wjK" id="2Ax-t4-JLU"/>
                         <outlet property="searchBar" destination="5ld-da-Pn3" id="ATV-cH-zoE"/>
@@ -82,12 +76,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1845" y="386"/>
+            <point key="canvasLocation" x="1790" y="386"/>
         </scene>
-        <!--Map View Controller-->
+        <!--Photo Location-->
         <scene sceneID="mE3-3a-cGs">
             <objects>
-                <viewController id="MkQ-LO-kHd" customClass="MapViewController" customModule="Assignment3" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Photo Location" id="MkQ-LO-kHd" customClass="MapViewController" customModule="Assignment3" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="IOQ-yL-VDx"/>
                         <viewControllerLayoutGuide type="bottom" id="Ve9-2P-sma"/>
@@ -99,23 +93,36 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="33N-8i-x7Y">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                             </mapView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Location services turned off ..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="csl-WH-LrF">
-                                <rect key="frame" x="16" y="72" width="306" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view alpha="0.74999999999999978" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q0y-Ml-2zJ">
+                                <rect key="frame" x="187" y="72" width="263" height="51"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location services turned off ..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJl-iH-gRq">
+                                        <rect key="frame" x="15" y="15" width="233" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="dJl-iH-gRq" secondAttribute="bottom" constant="15" id="aGb-Zx-Evn"/>
+                                    <constraint firstItem="dJl-iH-gRq" firstAttribute="top" secondItem="q0y-Ml-2zJ" secondAttribute="top" constant="15" id="bLF-vO-rh2"/>
+                                    <constraint firstAttribute="trailing" secondItem="dJl-iH-gRq" secondAttribute="trailing" constant="15" id="tZT-OG-11L"/>
+                                    <constraint firstItem="dJl-iH-gRq" firstAttribute="leading" secondItem="q0y-Ml-2zJ" secondAttribute="leading" constant="15" id="vJC-xv-ZPu"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="33N-8i-x7Y" firstAttribute="bottom" secondItem="Ve9-2P-sma" secondAttribute="top" id="0Ah-TW-wq3"/>
                             <constraint firstItem="33N-8i-x7Y" firstAttribute="top" secondItem="IOQ-yL-VDx" secondAttribute="bottom" id="678-8V-z6l"/>
+                            <constraint firstItem="33N-8i-x7Y" firstAttribute="leading" secondItem="q0y-Ml-2zJ" secondAttribute="trailing" constant="-450" id="FHy-YT-QMg"/>
                             <constraint firstItem="33N-8i-x7Y" firstAttribute="leading" secondItem="l6x-ae-jgC" secondAttribute="leading" id="dq6-gj-1B4"/>
+                            <constraint firstItem="q0y-Ml-2zJ" firstAttribute="top" secondItem="IOQ-yL-VDx" secondAttribute="bottom" constant="8" id="dvW-bH-DZV"/>
                             <constraint firstAttribute="trailing" secondItem="33N-8i-x7Y" secondAttribute="trailing" id="raS-qi-RXh"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="distanceLabel" destination="csl-WH-LrF" id="4OK-Oy-yFd"/>
                         <outlet property="mapView" destination="33N-8i-x7Y" id="VIc-C3-Obe"/>
                     </connections>
                 </viewController>

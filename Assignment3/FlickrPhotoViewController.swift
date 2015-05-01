@@ -7,12 +7,13 @@
 //
 
 import UIKit
-import ZLBalancedFlowLayout
+import XCGLogger
 
 struct Storyboard
 {
-    private static let locationSegue = "Show Location"
+    private static let locationSegue = "go"
     private static let photoCellIdentifier = "MyCell"
+    private static let searchResponseSelector = Selector("handleSearchResponse:")
 }
 
 class FlickrPhotoViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate
@@ -21,36 +22,58 @@ class FlickrPhotoViewController: UIViewController, UICollectionViewDataSource, U
     @IBOutlet weak var collectionView: UICollectionView!
     
     private var model: [FlickrPhoto] = [FlickrPhoto]()
-
+    
+    // MARK: UIViewController
+    
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.backgroundColor = UIColor.whiteColor()
+        
+        searchBar.delegate = self
+        searchBar.becomeFirstResponder()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Storyboard.searchResponseSelector, name: Methods.PhotoSearchMethod, object: nil)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == Storyboard.locationSegue
+        {
+            if let flickrPhoto = sender as? FlickrPhoto {
+                log.info("Clicked photo with ID: " + flickrPhoto.id)
+                if let destinationVC = segue.destinationViewController as? MapViewController {
+                    destinationVC.flickrPhoto = flickrPhoto
+                }
+            }
+        }
+    }
+    
+    // MARK: Flickr API
+    
+    // TODO: Ask how to delete the contents of a collection view
+    /**
+        EXPERIMENTAL
+        DOESN'T WORK
+    */
     @IBAction func clear(sender: AnyObject)
     {
         let deleteIndexPath = collectionView.indexPathsForVisibleItems()[0] as! NSIndexPath
         collectionView.deleteItemsAtIndexPaths([deleteIndexPath])
     }
     
-    override func viewDidLoad()
+    func searchForFlickrPhotos()
     {
-        super.viewDidLoad()
-        
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.backgroundColor = UIColor.whiteColor()
-        searchBar.delegate = self
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleSearchResponse:", name: Methods.PhotoSearchMethod, object: nil)
-    }
-    
-    func search()
-    {
-        FlickrLoader.sharedInstance.loadPhotos(forSearchString: searchBar.text)
+        log.info("Searching for: " + self.searchBar.text)
+        FlickrLoader.sharedInstance.loadPhotos(forSearchString: searchBar.text, perPage: 10)
     }
     
     func handleSearchResponse(notification: NSNotification)
     {
-        model.removeAll()
         if let photos = extractPhotosFromResponseNotification(notification) {
-            let lessPhotos = photos[1..<10]
-            for photo in lessPhotos {
+            for photo in photos {
                 model.append(FlickrPhoto(flickrAPIResponsePhoto: photo as NSDictionary))
             }
             collectionView.reloadData()
@@ -67,20 +90,12 @@ class FlickrPhotoViewController: UIViewController, UICollectionViewDataSource, U
         return nil
     }
     
-        override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-            if segue.identifier == "go"
-            {
-                if let destinationVC = segue.destinationViewController as? MapViewController {
-                    destinationVC.flickrPhoto = sender as? FlickrPhoto
-                }
-            }
-        }
-    
     // MARK: UICollectionViewDelegate
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        println(Storyboard.locationSegue)
-        self.performSegueWithIdentifier("go", sender: model[indexPath.row])
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
+    {
+        let currentFlickrPhoto = model[indexPath.row]
+        self.performSegueWithIdentifier(Storyboard.locationSegue, sender: currentFlickrPhoto)
     }
     
     // MARK: UICollectionViewDataSource
@@ -106,7 +121,7 @@ class FlickrPhotoViewController: UIViewController, UICollectionViewDataSource, U
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar)
     {
-        search()
+        searchForFlickrPhotos()
     }
 }
 

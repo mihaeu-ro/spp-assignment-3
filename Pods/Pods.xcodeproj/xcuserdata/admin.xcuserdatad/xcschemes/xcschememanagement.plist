@@ -9,7 +9,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-ZLBalancedFlowLayout.xcscheme</key>
+		<key>Pods-XCGLogger.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -22,17 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>5678874EAA70F19F77DF2AE6</key>
+		<key>A5000869E9437E7971E73ACD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9E277FB3F4A9434DCA047B01</key>
+		<key>C80CB36752CFC3F828CD5A62</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C69BE310CCF5532FB0806BE2</key>
+		<key>D888CADBFD6E28FAEA49143E</key>
 		<dict>
 			<key>primary</key>
 			<true/>

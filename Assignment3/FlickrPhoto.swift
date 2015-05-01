@@ -7,27 +7,32 @@
 //
 
 import UIKit
+import MapKit
 
 class FlickrPhoto
 {
-    var farm:   Int     = 0
-    var id:     String  = ""
+    var farm: Int = 0
+    var id: String  = ""
     var server: String  = ""
     var secret: String  = ""
+    var title: String  = ""
+    var image: UIImage?
     
     init(flickrAPIResponsePhoto: NSDictionary)
     {
-        farm    = flickrAPIResponsePhoto["farm"]    as! Int
-        id      = flickrAPIResponsePhoto["id"]      as! String
-        server  = flickrAPIResponsePhoto["server"]  as! String
-        secret  = flickrAPIResponsePhoto["secret"]  as! String
+        id = flickrAPIResponsePhoto["id"] as! String
+        farm = flickrAPIResponsePhoto["farm"] as! Int
+        title = flickrAPIResponsePhoto["title"] as! String
+        server = flickrAPIResponsePhoto["server"] as! String
+        secret = flickrAPIResponsePhoto["secret"] as! String
     }
     
     func loadImage() -> UIImage
     {
         let url = NSURL(string: photoUrl)
         let data = NSData(contentsOfURL: url!)
-        return UIImage(data: data!)!
+        image = UIImage(data: data!)!
+        return image!
     }
     
     var photoUrl: String

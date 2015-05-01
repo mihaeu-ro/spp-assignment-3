@@ -24,19 +24,32 @@ public class FlickrLoader: NSObject
     }
     
     /**
-        Will load photos from Flickr
-    
-        https://www.flickr.com/services/api/flickr.photos.search.html
+        :See: loadPhotos(forSearchString searchString: String, perPage: Int?)
     */
     func loadPhotos(forSearchString searchString: String)
     {
+        loadPhotos(forSearchString: searchString, perPage: nil)
+    }
+    
+    /**
+        Will load photos from Flickr
+    
+        https://www.flickr.com/services/api/flickr.photos.search.html
+    
+        :param: searchString String The query for Flickr.
+        :param: perPage Int? Defaults to 10
+    */
+    func loadPhotos(forSearchString searchString: String, perPage: Int?)
+    {
+        let perPage = perPage ?? FlickrAPI.PerPage
         let parameter: [String: String] = [
             ParameterName.ApiKey:           FlickrAPI.FlickrAPIKey,
             ParameterName.Method:           Methods.PhotoSearchMethod,
             ParameterName.Format:           FlickrAPI.FormatNameJson,
             ParameterName.Text:             searchString,
             ParameterName.NoJsonCallback:   FlickrAPI.NoJsonCallBackValue,
-            ParameterName.Geo:              FlickrAPI.GeoForced
+            ParameterName.Geo:              FlickrAPI.GeoForced,
+            ParameterName.PerPage:          "\(perPage)"
         ]
         
         let urlString = urlWithParameter(parameter as Dictionary<String, String>)
@@ -112,6 +125,7 @@ struct FlickrAPI
     static let FormatNameJson = "json"
     static let NoJsonCallBackValue = "1"
     static let GeoForced = "1"
+    static let PerPage = 10
 }
 
 struct UserInfoKeys
@@ -135,4 +149,5 @@ struct ParameterName
     static let PhotoId = "photo_id"
     static let NoJsonCallback = "nojsoncallback"
     static let Geo = "has_geo"
+    static let PerPage = "per_page"
 }

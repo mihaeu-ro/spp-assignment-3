@@ -1,6 +1,0 @@
-framework module ZLBalancedFlowLayout {
-  umbrella header "Pods-ZLBalancedFlowLayout-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -7,6 +7,7 @@
 //
 
 import MapKit
+import XCGLogger
 
 class MapViewController: UIViewController, CLLocationManagerDelegate
 {
@@ -20,10 +21,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
     }
     
     private let locationManager = CLLocationManager()
-    
-    private let myAnnotation = MKPointAnnotation()
-    private let photoAnnotation = MKPointAnnotation()
-    
+    private var photoAnnotation: FlickrPhotoMarker?
+
     var myLocation: CLLocationCoordinate2D? {
         didSet {
             updateDistanceLabel()
@@ -31,7 +30,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
     }
     var photoLocation: CLLocationCoordinate2D? {
         didSet {
-            updatePhotoAnnotations()
+            updatePhotoAnnotation()
             updateDistanceLabel()
         }
     }
@@ -62,23 +61,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
         }
     }
     
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!)
-    {
-        if let firstLocation = locations.first as? CLLocation {
-            let location = CLLocationCoordinate2D(latitude: firstLocation.coordinate.latitude, longitude: firstLocation.coordinate.longitude)
-            myLocation = location
-        }
-    }
-    
-    func updatePhotoAnnotations()
+    func updatePhotoAnnotation()
     {
         if photoLocation != nil {
             mapView.setCenterCoordinate(photoLocation!, animated: true)
             let region = MKCoordinateSpanMake (1000, 1000)
             
             mapView.removeAnnotation(photoAnnotation)
-            photoAnnotation.coordinate = CLLocationCoordinate2D(latitude: photoLocation!.latitude, longitude: photoLocation!.longitude)
-            photoAnnotation.title = "Photo"
+            photoAnnotation = FlickrPhotoMarker(flickrPhoto: flickrPhoto!, photoLocation: photoLocation!)
             mapView.addAnnotation(photoAnnotation)
         }
     }
@@ -88,18 +78,23 @@ class MapViewController: UIViewController, CLLocationManagerDelegate
         if myLocation != nil {
             if photoLocation != nil {
                 distanceLabel.text = "Photo was taken \(CLLocation.distanceInMeters(myLocation!, to: photoLocation!)) km away.";
-                distanceLabel.hidden = false
-            } else {
-                distanceLabel.hidden = true
             }
-        } else {
-            distanceLabel.hidden = true
+        }
+    }
+    
+    // MARK: CLLocationManager
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!)
+    {
+        if let firstLocation = locations.first as? CLLocation {
+            let location = CLLocationCoordinate2D(latitude: firstLocation.coordinate.latitude, longitude: firstLocation.coordinate.longitude)
+            myLocation = location
         }
     }
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!)
     {
-        println("Error while updating location: \(error.localizedDescription)")
+        log.error("Error while updating location: \(error.localizedDescription)")
     }
 }
 
