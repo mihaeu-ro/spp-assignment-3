@@ -11,15 +11,29 @@ import XCGLogger
 
 struct Storyboard
 {
-    private static let locationSegue = "go"
-    private static let photoCellIdentifier = "MyCell"
-    private static let searchResponseSelector = Selector("handleSearchResponse:")
+    // Identifiers
+    static let PhotoCellIdentifier = "MyCell"
+    static let AnnotationViewReuseIdentifier = "annotationReuseId"
+    
+    // Selectors
+    static let SearchResponseSelector = Selector("handleSearchResponse:")
+    
+    // Segues
+    static let LocationSegue = "go"
+    static let ShowImageSegue = "Show Image"
+    
+    static let LeftCalloutFrame = CGRect(x: 0, y: 0, width: 59, height: 59)
 }
 
 class FlickrPhotoViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate
 {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var spinner: UIActivityIndicatorView! {
+        didSet {
+            spinner.hidesWhenStopped = true
+        }
+    }
     
     private var model: [FlickrPhoto] = [FlickrPhoto]()
     
@@ -36,11 +50,11 @@ class FlickrPhotoViewController: UIViewController, UICollectionViewDataSource, U
         searchBar.delegate = self
         searchBar.becomeFirstResponder()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Storyboard.searchResponseSelector, name: Methods.PhotoSearchMethod, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Storyboard.SearchResponseSelector, name: Methods.PhotoSearchMethod, object: nil)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == Storyboard.locationSegue
+        if segue.identifier == Storyboard.LocationSegue
         {
             if let flickrPhoto = sender as? FlickrPhoto {
                 log.info("Clicked photo with ID: " + flickrPhoto.id)
@@ -53,17 +67,13 @@ class FlickrPhotoViewController: UIViewController, UICollectionViewDataSource, U
     
     // MARK: Flickr API
     
-    // TODO: Ask how to delete the contents of a collection view
-    /**
-        EXPERIMENTAL
-        DOESN'T WORK
-    */
     @IBAction func clear(sender: AnyObject)
     {
         let deleteIndexPath = collectionView.indexPathsForVisibleItems()[0] as! NSIndexPath
         collectionView.deleteItemsAtIndexPaths([deleteIndexPath])
     }
     
+    // TODO: Ask how to delete the contents of a collection view
     func searchForFlickrPhotos()
     {
         log.info("Searching for: " + self.searchBar.text)
@@ -76,6 +86,7 @@ class FlickrPhotoViewController: UIViewController, UICollectionViewDataSource, U
             for photo in photos {
                 model.append(FlickrPhoto(flickrAPIResponsePhoto: photo as NSDictionary))
             }
+            spinner.stopAnimating()
             collectionView.reloadData()
         }
     }
@@ -95,14 +106,14 @@ class FlickrPhotoViewController: UIViewController, UICollectionViewDataSource, U
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
     {
         let currentFlickrPhoto = model[indexPath.row]
-        self.performSegueWithIdentifier(Storyboard.locationSegue, sender: currentFlickrPhoto)
+        self.performSegueWithIdentifier(Storyboard.LocationSegue, sender: currentFlickrPhoto)
     }
     
     // MARK: UICollectionViewDataSource
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell
     {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(Storyboard.photoCellIdentifier, forIndexPath: indexPath) as! FlickrPhotoCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(Storyboard.PhotoCellIdentifier, forIndexPath: indexPath) as! FlickrPhotoCell
         cell.imageView.image = model[indexPath.row].loadImage()
         return cell
     }
@@ -121,6 +132,7 @@ class FlickrPhotoViewController: UIViewController, UICollectionViewDataSource, U
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar)
     {
+        spinner.startAnimating()
         searchForFlickrPhotos()
     }
 }

@@ -10,17 +10,6 @@ import MapKit
 
 class FlickrPhotoMarker: MKPointAnnotation
 {
-    private var flickrPhoto: FlickrPhoto?
-    private var photoLocation: CLLocationCoordinate2D?
-    
-    init(flickrPhoto: FlickrPhoto, photoLocation: CLLocationCoordinate2D)
-    {
-        super.init()
-        
-        self.flickrPhoto = flickrPhoto
-        self.photoLocation = photoLocation
-        
-        self.coordinate = photoLocation
-        self.title = flickrPhoto.title ?? "Photo"
-    }
+    var flickrPhoto: FlickrPhoto?
+    var photoLocation: CLLocationCoordinate2D?
 }

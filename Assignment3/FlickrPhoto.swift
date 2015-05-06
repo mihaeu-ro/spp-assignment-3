@@ -38,6 +38,13 @@ class FlickrPhoto
     var photoUrl: String
     {
         get {
+            return "https://farm\(farm).staticflickr.com/\(server)/\(id)_\(secret).jpg";
+        }
+    }
+    
+    var thumbnailUrl: String
+        {
+        get {
             return "https://farm\(farm).staticflickr.com/\(server)/\(id)_\(secret)_t.jpg";
         }
     }
